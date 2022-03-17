@@ -1,0 +1,23 @@
+﻿<Application x:Class="FSClassViewer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FSClassViewer"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles\Styles.xaml" />
+                <ResourceDictionary Source="Styles\Converters.xaml" />
+                <ResourceDictionary Source="Styles\Buttons.xaml" />
+                <ResourceDictionary Source="Styles\ComboBoxes.xaml" />
+                <ResourceDictionary Source="Styles\ListBoxes.xaml" />
+                <ResourceDictionary Source="Styles\HeaderedControl.xaml" />
+                <ResourceDictionary Source="Styles\TextBox.xaml" />
+                <ResourceDictionary Source="Styles\Text.xaml" />
+                <ResourceDictionary Source="Styles\Scrollbars.xaml" />
+                <ResourceDictionary Source="Styles\Menus.xaml" />
+                <ResourceDictionary Source="Styles\WindowStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,106 @@
+﻿<ResourceDictionary x:Class="ClassroomTimer.WindowStyle"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ClassroomTimer">
+
+    <Style x:Key="CustomWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="30"
+                              CornerRadius="4"
+                              GlassFrameThickness="0"
+                              NonClientFrameEdges="None"
+                              ResizeBorderThickness="5"
+                              UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="Background" Value="Gray" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid>
+                        <!--<Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="5,30,5,5">
+                            <AdornerDecorator>
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                        </Border>-->
+                        <Border Opacity="0.5">
+                            <Border.Background>
+                                <DrawingBrush Stretch="None" TileMode="Tile" Viewport="0,0,4,4" ViewportUnits="Absolute">
+
+                                    <!-- a drawing of 4 checkerboard tiles -->
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+
+                                            <!-- checkerboard background -->
+                                            <GeometryDrawing Brush="#FF03070A">
+                                                <GeometryDrawing.Geometry>
+                                                    <RectangleGeometry Rect="0,0,4,4" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+
+                                            <!-- two checkerboard foreground tiles -->
+                                            <GeometryDrawing Brush="#FF004A74">
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <RectangleGeometry Rect="0,0,2,2" />
+                                                        <RectangleGeometry Rect="2,2,2,2" />
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Border.Background>
+                        </Border>
+                        <Border>
+                            <AdornerDecorator>
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                        </Border>
+
+                        <Grid Height="30"
+                            VerticalAlignment="Top">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!--<StackPanel Orientation="Horizontal" Margin="5,0">
+                                    <Button Content="A" Margin="0,0,5,0" VerticalAlignment="Center" Click="Button_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
+                                    <Button Content="B" Margin="0,0,5,0" VerticalAlignment="Center" Click="Button_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
+                                    <Button Content="C" Margin="0,0,5,0" VerticalAlignment="Center" Click="Button_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
+                                    <Button Content="D" Margin="0,0,5,0" VerticalAlignment="Center" Click="Button_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
+                                </StackPanel>-->
+
+
+                            <TextBlock Margin="0,0,0,0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       Text="{TemplateBinding Title}" 
+                                       Grid.Column="1"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True" Grid.Column="2">
+                                <Button Click="Minimize_Click" Style="{StaticResource SystemButton}" Content="&#xE949;" Padding="15,10,15,5" />
+                                <Button Click="Maximize_Click" Style="{StaticResource MaxRestoreButton}" Padding="15,5" />
+                                <Button Click="Close_Click" Style="{StaticResource SystemButton}" Content="&#xE106;" Padding="15,5"  />
+                            </StackPanel>
+                        </Grid>
+
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

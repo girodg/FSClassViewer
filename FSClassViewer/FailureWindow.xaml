@@ -1,0 +1,45 @@
+﻿<Window x:Class="FSClassViewer.FailureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSClassViewer"
+        mc:Ignorable="d"
+        Title="Set Failure Level" Height="600" Width="800"
+        Style="{StaticResource CustomWindowStyle}"
+        Background="{StaticResource BackBlue}"
+        WindowStartupLocation="CenterOwner"
+        Foreground="LightGray">
+    <Border BorderBrush="{StaticResource SelectedBorder}" BorderThickness="1">
+        <DockPanel>
+            <TextBlock Text="Select the failure level for each IR." FontSize="24" DockPanel.Dock="Top" Margin="0,30,0,0"/>
+
+            <DockPanel DockPanel.Dock="Bottom">
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5">
+                    <Button x:Name="okBtn" Style="{StaticResource DefaultButton}" MinWidth="75" Margin="5,5,0,5"
+                IsDefault="True" Click="okBtn_Click" >Ok</Button>
+                    <Button x:Name="cancelBtn" Style="{StaticResource DefaultButton}" MinWidth="75" Margin="5,5,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                IsCancel="True" Click="cancelBtn_Click" >Cancel</Button>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Stretch" Margin="5">
+                    <DockPanel HorizontalAlignment="Stretch">
+                        <TextBlock Text="Emails: " VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding Path=ContactList}" Margin="5,0" />
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Contact Message:" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Command="{Binding Path=ResetMessageCommand}"
+                                ToolTip="Resets to the original message.">Reset</Button>
+                    </StackPanel>
+                    <TextBox TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True" HorizontalAlignment="Stretch" Margin="0,5" Height="100"
+                             Text="{Binding Path=ContactMessage}"/>
+                </StackPanel>
+            </DockPanel>
+
+            <ListBox DockPanel.Dock="Top" ItemsSource="{Binding Path=FailingStudents}" Background="Transparent" BorderThickness="0"
+                 ItemContainerStyle="{StaticResource StudentFailListBoxItem}"/>
+
+        </DockPanel>
+    </Border>
+</Window>

@@ -1,0 +1,71 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:FSClassViewer">
+
+    <ControlTemplate x:Key="CorrugationItem" TargetType="ListBoxItem">
+        <Border x:Name="imgBorder" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+
+            <Grid Width="Auto" Background="#55000000">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" >
+                <Label Content="Activity" />
+            </Border>
+            <Border Grid.Column="1">
+                <Label Content="Weight" />
+            </Border>
+            <Border Grid.Column="2">
+                <Label Content="What-If" />
+            </Border>
+            <Border Grid.Column="3">
+                <Label Content="Actual" />
+            </Border>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" TargetName="imgBorder" Value="{StaticResource HighlightBorder}" />
+                <Setter Property="Background" TargetName="imgBorder" Value="{StaticResource HighlightBack}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="BorderBrush" TargetName="imgBorder" Value="{StaticResource SelectedBorder}" />
+                <Setter Property="Background" TargetName="imgBorder" Value="{StaticResource DarkBlue}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type HeaderedItemsControl}" x:Key="CorrugationStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type HeaderedItemsControl}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="60"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20pt"/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="{Binding Name}" Foreground="{Binding Path=Grade,Converter={StaticResource TextGradeColorConverter}}" 
+                                           Margin="5,0,0,0" HorizontalAlignment="Stretch" TextAlignment="Left" Grid.Column="0" FontSize="18"/>
+                            <TextBlock Text="{Binding Weight,StringFormat='{}{0:N2}'}" HorizontalAlignment="Stretch" TextAlignment="Right" Grid.Column="1" FontSize="16"/>
+                            <TextBlock Text="{Binding Grade}" HorizontalAlignment="Stretch" TextAlignment="Right" Grid.Column="2" FontSize="16" Margin="0,0,5,0"/>
+
+                            <Grid Grid.Row="1" Grid.ColumnSpan="4" Width="Auto" Height="Auto" Background="Transparent">
+                                <ItemsPresenter/>
+                            </Grid>
+                        </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:FSClassViewer">
+
+
+    <Color x:Key="BackBlueColor">#FF282c35</Color>
+    <Color x:Key="DarkBlueColor">#FF1d222a</Color>
+    <Color x:Key="HighlightBackColor">#FF2f3841</Color>
+    <Color x:Key="HighlightBorderColor">#FF41555f</Color>
+    <Color x:Key="RegularBorderColor">#77425158</Color>
+    <Color x:Key="SelectedBorderColor">#FFe25545</Color>
+    <Color x:Key="ForegroundColor">#FF95d5e3</Color>
+    <Color x:Key="DisabledForegroundColor">#5595d5e3</Color>
+    <!--<Color x:Key="DisabledForegroundColor">#FF4a6bc0</Color>-->
+    <SolidColorBrush x:Key="ListBox.Static.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="ListBox.Static.Border" Color="Transparent"/>
+    <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="Transparent"/>
+    <SolidColorBrush x:Key="BackBlue" Color="{StaticResource BackBlueColor}" />
+    <SolidColorBrush x:Key="DarkBlue" Color="{StaticResource DarkBlueColor}" />
+    <SolidColorBrush x:Key="HighlightBack" Color="{StaticResource HighlightBackColor}" />
+    <SolidColorBrush x:Key="HighlightBorder" Color="{StaticResource HighlightBorderColor}" />
+    <SolidColorBrush x:Key="RegularBorder" Color="{StaticResource RegularBorderColor}" />
+    <SolidColorBrush x:Key="SelectedBorder" Color="{StaticResource SelectedBorderColor}" />
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}" />
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="{StaticResource DisabledForegroundColor}" />
+    
+    
+
+
+</ResourceDictionary>
