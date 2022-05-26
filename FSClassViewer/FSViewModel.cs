@@ -127,7 +127,9 @@ namespace FSClassViewer
         public float FailRate
         {
             get { return _failRate; }
-            set { _failRate = value;
+            set
+            {
+                _failRate = value;
                 OnPropertyChanged();
             }
         }
@@ -146,15 +148,15 @@ namespace FSClassViewer
         public List<YearData> Years { get; set; } = new List<YearData>();
 
         private ClassData _selectedClass;
-        public ClassData SelectedClass 
-        { 
+        public ClassData SelectedClass
+        {
             get
             {
                 return _selectedClass;
             }
             set
             {
-                if(value != _selectedClass)
+                if (value != _selectedClass)
                 {
                     _selectedClass = value;
                     _filePath = _selectedClass.Rosters[0];
@@ -169,9 +171,11 @@ namespace FSClassViewer
         public string ContactMessage
         {
             get { return _contactMsg; }
-            set { _contactMsg = value;
+            set
+            {
+                _contactMsg = value;
                 OnPropertyChanged();
-                if(!string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     App.ContactMessage = value;
                 }
@@ -181,7 +185,8 @@ namespace FSClassViewer
         public string ContactList
         {
             get { return _contactList; }
-            set { 
+            set
+            {
                 OnPropertyChanged();
                 if (!string.IsNullOrWhiteSpace(value))
                 {
@@ -456,6 +461,8 @@ namespace FSClassViewer
                             if (student.ID.Equals(valID))
                             {
                                 student.Clear();
+                                List<Activity> profActivities = new List<Activity>();
+                                Activity professionalism = null;
                                 for (int i = 2; i < vals.Length; i++) //skip the ID and name fields
                                 {
                                     if (i == vals.Length - 1)
@@ -470,7 +477,47 @@ namespace FSClassViewer
                                         ac.Grade = vals[i];
                                         student.Grades.Add(ac);
                                         ac.PropertyChanged += student.WhatIf_PropertyChanged;
+                                        if (ac.Name.Contains("0.9 Professionalism"))//specific to PG2
+                                            professionalism = ac;
                                     }
+                                    else if ((i - 2) < activities.Count && IsProfessionalismActivity(activities[i - 2]))
+                                    {
+                                        Activity cAct = activities[i - 2];
+                                        Activity ac = new Activity() { Name = cAct.Name, Weight = cAct.Weight };
+                                        ac.IsGraded = vals[i] != "-" && vals[i] != "C";
+                                        ac.Grade = vals[i];
+                                        profActivities.Add(ac);
+                                    }
+                                }
+                                if (professionalism != null)
+                                {
+                                    //sum up the grades of the following: 
+                                    // Profile pic (1%), GitHub (2%), Discord (1%), Attendance (2%), Plan (1%), Plan (1%), Plan (1%), Plan (1%)\
+                                    float profSum = 0F;
+                                    foreach (var grade in profActivities)
+                                    {
+                                        if (grade.Name.Contains("Profile Picture") ||
+                                            grade.Name.Contains("Discord") ||
+                                            grade.Name.Contains("1 Plan"))
+                                        {
+                                            if (float.TryParse(grade.Grade, out float gd))
+                                            {
+                                                float thisGrade = gd * 1;
+                                                profSum += thisGrade;
+                                            }
+                                        }
+                                        else if (grade.Name.Contains("GitHub") ||
+                                                 grade.Name.Contains("Attendance"))
+                                        {
+                                            if (float.TryParse(grade.Grade, out float gd))
+                                            {
+                                                float thisGrade = gd * 2;
+                                                profSum += thisGrade;
+                                            }
+                                        }
+                                    }
+                                    if (professionalism != null)
+                                        professionalism.Grade = (profSum * 0.1F).ToString();//10%
                                 }
                                 student.CalculateGrades();
                                 break;
@@ -483,6 +530,15 @@ namespace FSClassViewer
                 if (showMessage)
                     System.Windows.Forms.MessageBox.Show("The grades have been loaded.", "Load Grades");
             }
+        }
+
+        private bool IsProfessionalismActivity(Activity activity)
+        {
+            return (activity.Name.Contains("Profile Picture") ||
+                    activity.Name.Contains("Discord") ||
+                    activity.Name.Contains("1 Plan") ||
+                    activity.Name.Contains("GitHub") ||
+                    activity.Name.Contains("Attendance"));
         }
 
         internal void LoadClass()
@@ -561,7 +617,7 @@ namespace FSClassViewer
             _recentClass = GetRecentClass(_filePath);
             UpdateRecents(App.RecentClasses, _recentClass);
             App.RecentClasses.Insert(0, _recentClass);
-            if(App.RecentClasses.Count > 24)
+            if (App.RecentClasses.Count > 24)
             {
                 while (App.RecentClasses.Count > 24)
                     App.RecentClasses.RemoveAt(App.RecentClasses.Count - 1);
@@ -587,7 +643,7 @@ namespace FSClassViewer
             //if so, load class
             Debug.WriteLine(recentClass.FileName);
 
-            if(recentClass != _recentClass)
+            if (recentClass != _recentClass)
             {
                 _filePath = recentClass.FilePath;
                 OnLoadClass();
@@ -598,7 +654,7 @@ namespace FSClassViewer
         {
             for (int i = recentClasses.Count - 1; i >= 0; i--)
             {
-                if(recentClasses[i].FileName.Equals(recentClass.FileName))
+                if (recentClasses[i].FileName.Equals(recentClass.FileName))
                 {
                     recentClasses.RemoveAt(i);
                     break;
@@ -622,7 +678,7 @@ namespace FSClassViewer
 
         private void ReadClassInfo()
         {
-            if(_selectedClass != null && _selectedClass.Rosters.Count > 0)
+            if (_selectedClass != null && _selectedClass.Rosters.Count > 0)
             {
                 Students.Clear();
                 //load each roster file for the class
@@ -789,7 +845,7 @@ namespace FSClassViewer
                             };
                             nextStudent.AddPhones(vals[6].Trim(trims));
                             nextStudent.AddPhones(vals[7].Trim(trims));
-                            if(nextStudent.Degree.Contains(','))
+                            if (nextStudent.Degree.Contains(','))
                             {
                                 nextStudent.Degree = nextStudent.Degree.Substring(0, nextStudent.Degree.IndexOf(','));
                             }
@@ -867,8 +923,15 @@ namespace FSClassViewer
                             DirectoryInfo[] subDirs = dirs.GetDirectories();
                             foreach (var dir in subDirs)
                             {
-                                string subPath = Path.Combine(dir.FullName, "Feedback_Lab.docx");
-                                CreateFeedbackFile(subPath);
+                                if (dir.FullName.EndsWith("Professionalism"))
+                                {
+                                    GenerateProfessionalismCalculators(dir.FullName);
+                                }
+                                else
+                                {
+                                    string subPath = Path.Combine(dir.FullName, "Feedback_Lab.docx");
+                                    CreateFeedbackFile(subPath);
+                                }
                             }
                         }
                         //for some reason, using File.Copy to copy the file causes a corruption? the copied file cannot be opened but the original can. :-(
@@ -889,6 +952,21 @@ namespace FSClassViewer
                 }
             }
 
+        }
+
+        private void GenerateProfessionalismCalculators(string fullPath)
+        {
+            string TemplatePath = Path.Combine(fullPath,@"ProfessionalismCalculator.xlsx");
+            if (File.Exists(TemplatePath))
+            {
+                var orderedStudents = Students.OrderBy(st => st.LastName);
+                foreach (var student in orderedStudents)
+                {
+                    string newFileName = $"ProfessionalismCalculator_{student.LastName}{student.FirstName}.xlsx";
+                    string FinalPath = Path.Combine(fullPath, newFileName);
+                    File.Copy(TemplatePath, FinalPath, true);
+                }
+            }
         }
 
         private bool GetDirectory(string currentDirectory, out string selectedDirectory)
