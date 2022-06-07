@@ -452,6 +452,7 @@ namespace FSClassViewer
                     else //the student grades
                     {
                         string[] vals = line.Split(',');
+                        List<string> professionalismNames = new List<string>() { "0.7 Professionalism", "0.9 Professionalism" };
                         foreach (var student in Students)
                         {
                             //find the student in the List of students
@@ -477,7 +478,7 @@ namespace FSClassViewer
                                         ac.Grade = vals[i];
                                         student.Grades.Add(ac);
                                         ac.PropertyChanged += student.WhatIf_PropertyChanged;
-                                        if (ac.Name.Contains("0.9 Professionalism"))//specific to PG2
+                                        if (professionalismNames.Contains(ac.Name))//specific to PG2
                                             professionalism = ac;
                                     }
                                     else if ((i - 2) < activities.Count && IsProfessionalismActivity(activities[i - 2]))
