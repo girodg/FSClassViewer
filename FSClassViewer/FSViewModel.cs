@@ -452,7 +452,7 @@ namespace FSClassViewer
                     else //the student grades
                     {
                         string[] vals = line.Split(',');
-                        List<string> professionalismNames = new List<string>() { "0.7 Professionalism", "0.9 Professionalism" };
+                        List<string> professionalismNames = new List<string>() { "0.3 Professionalism", "0.7 Professionalism", "0.9 Professionalism" };
                         foreach (var student in Students)
                         {
                             //find the student in the List of students
