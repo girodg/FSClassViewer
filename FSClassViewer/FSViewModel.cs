@@ -478,48 +478,48 @@ namespace FSClassViewer
                                         ac.Grade = vals[i];
                                         student.Grades.Add(ac);
                                         ac.PropertyChanged += student.WhatIf_PropertyChanged;
-                                        if (professionalismNames.Contains(ac.Name))//specific to PG2
-                                            professionalism = ac;
+                                        //if (professionalismNames.Contains(ac.Name))//specific to PG2
+                                        //    professionalism = ac;
                                     }
-                                    else if ((i - 2) < activities.Count && IsProfessionalismActivity(activities[i - 2]))
-                                    {
-                                        Activity cAct = activities[i - 2];
-                                        Activity ac = new Activity() { Name = cAct.Name, Weight = cAct.Weight };
-                                        ac.IsGraded = vals[i] != "-" && vals[i] != "C";
-                                        ac.Grade = vals[i];
-                                        profActivities.Add(ac);
-                                    }
+                                    //else if ((i - 2) < activities.Count && IsProfessionalismActivity(activities[i - 2]))
+                                    //{
+                                    //    Activity cAct = activities[i - 2];
+                                    //    Activity ac = new Activity() { Name = cAct.Name, Weight = cAct.Weight };
+                                    //    ac.IsGraded = vals[i] != "-" && vals[i] != "C";
+                                    //    ac.Grade = vals[i];
+                                    //    profActivities.Add(ac);
+                                    //}
                                 }
-                                if (professionalism != null)
-                                {
-                                    //sum up the grades of the following: 
-                                    // Profile pic (1%), GitHub (2%), Discord (1%), Attendance (2%), Plan (1%), Plan (1%), Plan (1%), Plan (1%)\
-                                    float profSum = 0F;
-                                    foreach (var grade in profActivities)
-                                    {
-                                        if (grade.Name.Contains("Profile Picture") ||
-                                            grade.Name.Contains("Discord") ||
-                                            grade.Name.Contains("1 Plan"))
-                                        {
-                                            if (float.TryParse(grade.Grade, out float gd))
-                                            {
-                                                float thisGrade = gd * 1;
-                                                profSum += thisGrade;
-                                            }
-                                        }
-                                        else if (grade.Name.Contains("GitHub") ||
-                                                 grade.Name.Contains("Attendance"))
-                                        {
-                                            if (float.TryParse(grade.Grade, out float gd))
-                                            {
-                                                float thisGrade = gd * 2;
-                                                profSum += thisGrade;
-                                            }
-                                        }
-                                    }
-                                    if (professionalism != null)
-                                        professionalism.Grade = (profSum * 0.1F).ToString();//10%
-                                }
+                                //if (professionalism != null)
+                                //{
+                                //    //sum up the grades of the following: 
+                                //    // Profile pic (1%), GitHub (2%), Discord (1%), Attendance (2%), Plan (1%), Plan (1%), Plan (1%), Plan (1%)\
+                                //    float profSum = 0F;
+                                //    foreach (var grade in profActivities)
+                                //    {
+                                //        if (grade.Name.Contains("Profile Picture") ||
+                                //            grade.Name.Contains("Discord") ||
+                                //            grade.Name.Contains("1 Plan"))
+                                //        {
+                                //            if (float.TryParse(grade.Grade, out float gd))
+                                //            {
+                                //                float thisGrade = gd * 1;
+                                //                profSum += thisGrade;
+                                //            }
+                                //        }
+                                //        else if (grade.Name.Contains("GitHub") ||
+                                //                 grade.Name.Contains("Attendance"))
+                                //        {
+                                //            if (float.TryParse(grade.Grade, out float gd))
+                                //            {
+                                //                float thisGrade = gd * 2;
+                                //                profSum += thisGrade;
+                                //            }
+                                //        }
+                                //    }
+                                //    if (professionalism != null)
+                                //        professionalism.Grade = (profSum * 0.1F).ToString();//10%
+                                //}
                                 student.CalculateGrades();
                                 break;
                             }
