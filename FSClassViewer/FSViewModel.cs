@@ -1059,6 +1059,7 @@ namespace FSClassViewer
 
         private void AddProblemsTips(Body body)
         {
+            AddSection(body, "Feedback on GitHub");
             AddSection(body, "Problems");
             AddSection(body, "Tips");
         }
