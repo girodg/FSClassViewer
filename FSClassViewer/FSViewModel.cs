@@ -930,7 +930,7 @@ namespace FSClassViewer
                                 }
                                 else
                                 {
-                                    string subPath = Path.Combine(dir.FullName, "Feedback_Lab.docx");
+                                    string subPath = Path.Combine(dir.FullName, dir.Name + " Feedback.docx");
                                     CreateFeedbackFile(subPath);
                                 }
                             }
