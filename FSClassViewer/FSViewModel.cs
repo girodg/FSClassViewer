@@ -1060,8 +1060,11 @@ namespace FSClassViewer
         private void AddProblemsTips(Body body)
         {
             AddSection(body, "Feedback on GitHub");
+            AddSection(body, String.Empty);
             AddSection(body, "Problems");
+            AddSection(body, String.Empty);
             AddSection(body, "Tips");
+            AddSection(body, String.Empty);
         }
 
         private static void AddSection(Body body, string sectionText)
