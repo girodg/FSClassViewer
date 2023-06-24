@@ -810,6 +810,9 @@ namespace FSClassViewer
             int index = 0;
             //Students.Clear();
             //List<string> students = new List<string>();
+            string[] headerRow = lines[0].Split(',');
+            int degreeIndex = Array.IndexOf(headerRow, "Degree Program");
+            if (degreeIndex == -1) degreeIndex = 12;
             foreach (var line in lines)
             {
                 if (!string.IsNullOrWhiteSpace(line))
@@ -836,7 +839,7 @@ namespace FSClassViewer
                                 Name = name,
                                 FirstName = vals[1].Trim(trims),
                                 LastName = vals[2].Trim(trims),
-                                Degree = vals[12].Trim(trims),
+                                Degree = vals[degreeIndex].Trim(trims),
                                 PrimaryEmail = vals[4].Trim(trims),
                                 PersonalEmail = vals[5].Trim(trims),
                                 BestTime = vals[8],
