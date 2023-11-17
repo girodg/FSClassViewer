@@ -1209,9 +1209,10 @@ namespace FSClassViewer
             sw.WriteLine("Campus");
             if (campusFirst.Count > 0)
             {
+                sw.WriteLine($"---{campusInfo}---");
                 foreach (var student in campusFirst)
                 {
-                    sw.WriteLine($"\t{campusInfo},{student.Name},{student.ID}");
+                    sw.WriteLine($"{student.Name},{student.ID},CAMPUS,Section: {student.Section},Garrett Girod");
                 }
             }
             else
@@ -1220,9 +1221,10 @@ namespace FSClassViewer
             sw.WriteLine("\nOnline");
             if (onlineFirst.Count > 0)
             {
+                sw.WriteLine($"---{onlineInfo}---");
                 foreach (var student in onlineFirst)
                 {
-                    sw.WriteLine($"\t{onlineInfo},{student.Name},{student.ID}");
+                    sw.WriteLine($"{student.Name},{student.ID},ONLINE,Section: {student.Section},Garrett Girod");
                 }
             }
             else
