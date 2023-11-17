@@ -13,6 +13,11 @@ namespace FSClassViewer
 		First=1,
 		Other
 	}
+	public enum Auditing
+	{
+		No,
+		Yes
+	}
     public class Student : ModelBase
     {
 		private string _id;
@@ -21,6 +26,7 @@ namespace FSClassViewer
 		private float _worstGrade = 100;
 		private float _whatIfGrade = 100;
 		private bool _isActive = true;
+		private Auditing _isAudit = Auditing.No;
 		private ObservableCollection<Activity> _grades = new ObservableCollection<Activity>();
 		private string _degree;
 		private bool _isOnline = false;
@@ -155,9 +161,18 @@ namespace FSClassViewer
 			set { _isActive = value;
 				OnPropertyChanged();
 			}
-		}
+        }
+        public Auditing IsAudit
+        {
+            get { return _isAudit; }
+            set
+            {
+                _isAudit = value;
+                OnPropertyChanged();
+            }
+        }
 
-		public string Degree
+        public string Degree
 		{
 			get { return _degree; }
 			set { _degree = value;

@@ -75,10 +75,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppCommand.cs" />
+    <Compile Include="AuditWindow.xaml.cs">
+      <DependentUpon>AuditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\AccessTimeConverter.cs" />
     <Compile Include="Converters\ActiveOpacityConverter.cs" />
     <Compile Include="Activity.cs" />
     <Compile Include="AppSettings.cs" />
+    <Compile Include="Converters\AuditingColorConverter.cs" />
     <Compile Include="FailureWindow.xaml.cs">
       <DependentUpon>FailureWindow.xaml</DependentUpon>
     </Compile>
@@ -93,6 +97,10 @@
     <Compile Include="Converters\TextGradeColorConverter.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="Styles\WindowStyle.cs" />
+    <Page Include="AuditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

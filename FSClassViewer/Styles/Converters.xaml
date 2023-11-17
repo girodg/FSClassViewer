@@ -6,4 +6,5 @@
     <local:TextGradeColorConverter x:Key="TextGradeColorConverter" />
     <local:ActiveOpacityConverter x:Key="ActiveOpacityConverter" />
     <local:AccessTimeConverter x:Key="AccessTimeConverter" />
+    <local:AuditingColorConverter x:Key="AuditingColorConverter" />
 </ResourceDictionary>

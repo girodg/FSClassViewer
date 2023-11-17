@@ -38,6 +38,8 @@
                     <MenuItem Header="Create _IR File" Command="{Binding Path=MakeIRCommand}" />
                     <MenuItem Header="Create _Feedback Files" Command="{Binding Path=CreateFeedbackCommand}" />
                     <Separator />
+                    <MenuItem Header="Set _Audits" Command="{Binding Path=SetAuditsCommand}" />
+                    <Separator />
                     <MenuItem Header="Set _Roster Root Folder" Command="{Binding Path=SetRosterRootCommand}" />
                     <Separator />
                     <MenuItem Command="ApplicationCommands.Close" Header="E_xit" InputGestureText="ALT+F4" />

@@ -22,6 +22,11 @@ namespace FSClassViewer
         public Failures FailureEnum { get; set; } = Failures.None;
         public string FailureString { get; set; }
     }
+    public class AuditingValue
+    {
+        public Auditing AuditingEnum { get; set; } = Auditing.No;
+        public string AuditingString { get; set; }
+    }
 
     public class FSViewModel : ViewModelBase
     {
@@ -33,6 +38,7 @@ namespace FSClassViewer
         private string _course;
         private ObservableCollection<Student> _students = new ObservableCollection<Student>();
         private ObservableCollection<Student> _failingStudents = new ObservableCollection<Student>();
+        private ObservableCollection<Student> _auditingStudents = new ObservableCollection<Student>();
         private Student _selectedStudent;
         private bool _gradesLoaded = false;
         private MainWindow _mainWin;
@@ -101,6 +107,17 @@ namespace FSClassViewer
         }
 
 
+        public ObservableCollection<Student> AuditingStudents
+        {
+            get { return _auditingStudents; }
+            set
+            {
+                _auditingStudents = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public ObservableCollection<Student> FailingStudents
         {
             get { return _failingStudents; }
@@ -136,6 +153,7 @@ namespace FSClassViewer
 
 
         public List<FailureValue> ListOfFailures { get; set; }
+        public List<AuditingValue> ListOfAudits { get; set; }
 
         public ObservableCollection<RecentClass> Recents
         {
@@ -206,11 +224,13 @@ namespace FSClassViewer
         public AppCommand<object> SetRosterRootCommand { get; set; }
         public AppCommand<object> RefreshClassCommand { get; set; }
         public AppCommand<object> ResetMessageCommand { get; set; }
+        public AppCommand<object> SetAuditsCommand { get; set; }
         #endregion
 
         public FSViewModel(MainWindow mainWin)
         {
             InitFailList();
+            InitAuditList();
 
             if (!string.IsNullOrWhiteSpace(App.ContactMessage))
                 ContactMessage = App.ContactMessage;
@@ -220,6 +240,7 @@ namespace FSClassViewer
             SetRosterRootCommand = new AppCommand<object>(SetRosterRoot);
             RefreshClassCommand = new AppCommand<object>(RefreshClass, CanRefreshClassCommand);
             ResetMessageCommand = new AppCommand<object>(ResetContactMessage);
+            SetAuditsCommand = new AppCommand<object>(SetAudits, CanSetAuditsCommand);
 
             CreateRosterTree();
 
@@ -234,6 +255,7 @@ namespace FSClassViewer
             MakeIRCommand.RaiseCanExecuteChanged();
             CreateFeedbackCommand.RaiseCanExecuteChanged();
             RefreshClassCommand.RaiseCanExecuteChanged();
+            SetAuditsCommand.RaiseCanExecuteChanged();
         }
 
         private bool CanRefreshClassCommand(object arg)
@@ -243,6 +265,44 @@ namespace FSClassViewer
         private void ResetContactMessage(object obj)
         {
             ContactMessage = _originalContact;
+        }
+
+        private void SetAudits(object obj)
+        {
+            //open the dialog that lists all the students (Name, dropdown: No (default), Auditing)
+            //Save button: writes a json file in the roster folder w/ the class-month-audits.json or csv file
+
+            InitAudits();
+            AuditWindow audits = new AuditWindow();
+            audits.DataContext = this;
+            audits.ShowView(_mainWin);
+            if (audits.IsOk)
+            {
+                ////get list of students
+                ////recreate the audit file
+                string fName = Path.GetFileName(_filePath);
+                string[] fParts = fName.Split('_');
+
+
+                ClassInformation info = LookupCourse(fParts[1]);
+                string outFile = Path.Combine(Path.GetDirectoryName(_filePath), $"Audits_{Month}_{info.Shortcut}.txt");
+
+                ////string classInfo = $"{fParts[1]},{courseName}";
+                using (StreamWriter sw = new StreamWriter(outFile))
+                {
+                    WriteAuditList(sw);
+                }
+
+                //System.Windows.Forms.MessageBox.Show("Audits file has been saved.", "Audits");
+                //System.Diagnostics.Process.Start("notepad.exe", outFile);
+
+                CalculateFailRate();
+            }
+        }
+
+        private bool CanSetAuditsCommand(object arg)
+        {
+            return _selectedClass != null;
         }
         #endregion
 
@@ -692,6 +752,16 @@ namespace FSClassViewer
                     {
                         LoadGrades(false);
                     }
+
+
+                    string fName = Path.GetFileName(_filePath);
+                    string[] fParts = fName.Split('_');
+                    ClassInformation info = LookupCourse(fParts[1]);
+                    string auditFile = Path.Combine(Path.GetDirectoryName(_filePath), $"Audits_{Month}_{info.Shortcut}.txt");
+                    if (File.Exists(auditFile))
+                    {
+                        LoadAudits(auditFile);
+                    }
                 }
                 //default it to the first roster file in the list
                 _filePath = _selectedClass.Rosters[0];
@@ -790,6 +860,25 @@ namespace FSClassViewer
                 return App.LastFilePath;
 
             return @"c:\";
+        }
+
+        private void LoadAudits(string auditFile)
+        {
+            string fileContent;
+            using (StreamReader reader = new StreamReader(auditFile))
+            {
+                fileContent = reader.ReadToEnd();
+            }
+            List<string> audits = fileContent.Split('^').ToList();
+            foreach (var ID in audits)
+            {
+                foreach (var student in Students)
+                {
+                    if (student.ID == ID)
+                        student.IsAudit = Auditing.Yes;
+                }
+
+            }
         }
 
         private void LoadStudents()
@@ -960,7 +1049,7 @@ namespace FSClassViewer
 
         private void GenerateProfessionalismCalculators(string fullPath)
         {
-            string TemplatePath = Path.Combine(fullPath,@"ProfessionalismCalculator.xlsx");
+            string TemplatePath = Path.Combine(fullPath, @"ProfessionalismCalculator.xlsx");
             if (File.Exists(TemplatePath))
             {
                 var orderedStudents = Students.OrderBy(st => st.LastName);
@@ -1013,6 +1102,13 @@ namespace FSClassViewer
             ListOfFailures.Add(new FailureValue() { FailureEnum = Failures.Other, FailureString = "Multiple" });
             //ListOfFailures.Add(new FailureValue() { FailureEnum = Failures.Second, FailureString = "Second" });
             //ListOfFailures.Add(new FailureValue() { FailureEnum = Failures.Third, FailureString = "Third" });
+        }
+
+        private void InitAuditList()
+        {
+            ListOfAudits = new List<AuditingValue>();
+            ListOfAudits.Add(new AuditingValue() { AuditingEnum = Auditing.No, AuditingString = "No" });
+            ListOfAudits.Add(new AuditingValue() { AuditingEnum = Auditing.Yes, AuditingString = "Yes" });
         }
 
         #region Feedback File
@@ -1192,6 +1288,26 @@ namespace FSClassViewer
             }
         }
 
+
+        private void InitAudits()
+        {
+            AuditingStudents = new ObservableCollection<Student>(Students);
+        }
+
+        internal void WriteAuditList(StreamWriter sw)
+        {
+            bool isFirst = true;
+            foreach (var student in AuditingStudents)
+            {
+                if(student.IsAudit == Auditing.Yes)
+                {
+                    if (!isFirst) sw.Write("^");
+                    sw.Write(student.ID);
+                    isFirst = false;
+                }
+            }
+        }
+
         internal void WriteFailureList(IEnumerable<Student> s, StreamWriter sw, ClassInformation info)
         {
             var campusInfo = info.ClassCode;
@@ -1297,7 +1413,7 @@ namespace FSClassViewer
             foreach (var student in Students)
             {
                 float grade = (useCurrentGrade) ? student.CurrentGrade : student.WorstGrade;
-                if (grade < Student.FailThreshold && student.IsActive)
+                if (grade < Student.FailThreshold && student.IsActive && student.IsAudit == Auditing.No )
                 {
                     FailingStudents.Add(student);
                     if (student.FailureCount == Failures.None) student.FailureCount = Failures.First;
