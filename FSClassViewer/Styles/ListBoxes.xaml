@@ -156,8 +156,8 @@
                             <Setter Property="Background" TargetName="imgBorder" Value="{StaticResource HighlightBack}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="BorderBrush" TargetName="imgBorder" Value="{StaticResource SelectedBorder}" />
-                            <Setter Property="Background" TargetName="imgBorder" Value="{StaticResource DarkBlue}" />
+                            <Setter Property="BorderBrush" TargetName="imgBorder" Value="{StaticResource SelectedRedBorder}" />
+                            <Setter Property="Background" TargetName="imgBorder" Value="{StaticResource DarkRed}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -4,11 +4,13 @@
 
 
     <Color x:Key="BackBlueColor">#FF282c35</Color>
-    <Color x:Key="DarkBlueColor">#FF1d222a</Color>
+    <Color x:Key="DarkBlueColor">#FF0d1117</Color>
+    <Color x:Key="DarkRedColor">#FF25171c</Color>
+    <Color x:Key="RedColor">#FF542426</Color>
     <Color x:Key="HighlightBackColor">#FF2f3841</Color>
     <Color x:Key="HighlightBorderColor">#FF41555f</Color>
     <Color x:Key="RegularBorderColor">#77425158</Color>
-    <Color x:Key="SelectedBorderColor">#FFe25545</Color>
+    <Color x:Key="SelectedBorderColor">#FFda3633</Color>
     <Color x:Key="ForegroundColor">#FF95d5e3</Color>
     <Color x:Key="DisabledForegroundColor">#5595d5e3</Color>
     <!--<Color x:Key="DisabledForegroundColor">#FF4a6bc0</Color>-->
@@ -18,10 +20,12 @@
     <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="Transparent"/>
     <SolidColorBrush x:Key="BackBlue" Color="{StaticResource BackBlueColor}" />
     <SolidColorBrush x:Key="DarkBlue" Color="{StaticResource DarkBlueColor}" />
+    <SolidColorBrush x:Key="DarkRed" Color="{StaticResource DarkRedColor}" />
     <SolidColorBrush x:Key="HighlightBack" Color="{StaticResource HighlightBackColor}" />
     <SolidColorBrush x:Key="HighlightBorder" Color="{StaticResource HighlightBorderColor}" />
     <SolidColorBrush x:Key="RegularBorder" Color="{StaticResource RegularBorderColor}" />
     <SolidColorBrush x:Key="SelectedBorder" Color="{StaticResource SelectedBorderColor}" />
+    <SolidColorBrush x:Key="SelectedRedBorder" Color="{StaticResource RedColor}" />
     <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}" />
     <SolidColorBrush x:Key="DisabledForegroundBrush" Color="{StaticResource DisabledForegroundColor}" />
     

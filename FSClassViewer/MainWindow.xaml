@@ -25,7 +25,7 @@
             <Binding Path="Course" />
         </MultiBinding>
     </Window.Title>
-    <Border x:Name="ContainingBorder" BorderBrush="{StaticResource SelectedBorder}" BorderThickness="1">
+    <Border x:Name="ContainingBorder" BorderBrush="{StaticResource SelectedRedBorder}" BorderThickness="1">
         <Grid >
             <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="treeColumn" Width="200" />
@@ -88,7 +88,7 @@
                 </StackPanel>
 
 
-                <Grid DockPanel.Dock="Left">
+                <Grid DockPanel.Dock="Left" Background="{StaticResource DarkBlue}">
 
                     <TreeView Name="trvRosters" Width="200" Foreground="White" SelectedItemChanged="trvRosters_SelectedItemChanged"
                           VirtualizingStackPanel.IsVirtualizing="False" BorderBrush="Transparent" Margin="0,5,0,0">
@@ -134,9 +134,9 @@
                     <ListBox ItemsSource="{Binding Path=Students}" Grid.Column="0" Background="Transparent" Foreground="LightGray" SelectedItem="{Binding Path=SelectedStudent}"
                              ItemContainerStyle="{StaticResource StudentListBoxItem}" BorderThickness="0" Margin="0,0,0,5"/>
 
-                    <DockPanel DataContext="{Binding Path=SelectedStudent}" Margin="5" Grid.Column="1">
-                        <Border DockPanel.Dock="Top" Background="#33000000" Padding="10">
-                            <Grid DockPanel.Dock="Top">
+                    <DockPanel DataContext="{Binding Path=SelectedStudent}" Margin="0" Grid.Column="1" SnapsToDevicePixels="True">
+                        <Border DockPanel.Dock="Top" Background="#FF243e5d" Padding="10" BorderThickness="0" SnapsToDevicePixels="True">
+                            <Grid DockPanel.Dock="Top" SnapsToDevicePixels="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -215,7 +215,7 @@
                     <TextBlock Text="{Binding Path=BestGrade}" FontSize="14" Margin="0,0,5,0" VerticalAlignment="Bottom"/>
                     <TextBlock Text="{Binding Path=WorstGrade}" FontSize="14" Margin="0,0,5,0" VerticalAlignment="Bottom"/>
                 </StackPanel>-->
-                        <Grid DockPanel.Dock="Top" Background="#33FFFFFF">
+                        <Grid DockPanel.Dock="Top" Background="#FF2f3742" SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="39*" />
                                 <ColumnDefinition Width="361*"/>
@@ -223,20 +223,20 @@
                                 <ColumnDefinition Width="75"/>
                                 <ColumnDefinition Width="75"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" Grid.ColumnSpan="2"  >
+                            <Border Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0" SnapsToDevicePixels="True" >
                                 <Label Content="Activity" Foreground="White"/>
                             </Border>
-                            <Border Grid.Column="2">
+                            <Border Grid.Column="2" BorderThickness="0" SnapsToDevicePixels="True">
                                 <Label Content="Weight"  Foreground="White" HorizontalAlignment="Right"/>
                             </Border>
-                            <Border Grid.Column="3">
+                            <Border Grid.Column="3" BorderThickness="0" SnapsToDevicePixels="True">
                                 <Label Content="Grade" Foreground="White" HorizontalAlignment="Right" />
                             </Border>
-                            <Border Grid.Column="4">
+                            <Border Grid.Column="4" BorderThickness="0" SnapsToDevicePixels="True">
                                 <Label Content="What-If"  Foreground="White" HorizontalAlignment="Right"/>
                             </Border>
                         </Grid>
-                        <ListBox ItemsSource="{Binding Path=Grades}" Grid.Column="0" Background="Transparent" Foreground="LightGray" BorderThickness="0"
+                        <ListBox ItemsSource="{Binding Path=Grades}" Grid.Column="0" Background="#FF13233a" Foreground="LightGray" BorderThickness="0"
                                  ItemContainerStyle="{StaticResource ActivityListBoxItem}"/>
 
                     </DockPanel>

@@ -29,22 +29,21 @@
                                 <ContentPresenter />
                             </AdornerDecorator>
                         </Border>-->
-                        <Border Opacity="0.5">
+                        <!-- checkerboard background -->
+                        <!-- two checkerboard foreground tiles -->
+                        <!--<Border Opacity="0">
                             <Border.Background>
                                 <DrawingBrush Stretch="None" TileMode="Tile" Viewport="0,0,4,4" ViewportUnits="Absolute">
 
-                                    <!-- a drawing of 4 checkerboard tiles -->
                                     <DrawingBrush.Drawing>
                                         <DrawingGroup>
 
-                                            <!-- checkerboard background -->
                                             <GeometryDrawing Brush="#FF03070A">
                                                 <GeometryDrawing.Geometry>
                                                     <RectangleGeometry Rect="0,0,4,4" />
                                                 </GeometryDrawing.Geometry>
                                             </GeometryDrawing>
 
-                                            <!-- two checkerboard foreground tiles -->
                                             <GeometryDrawing Brush="#FF004A74">
                                                 <GeometryDrawing.Geometry>
                                                     <GeometryGroup>
@@ -58,7 +57,7 @@
                                     </DrawingBrush.Drawing>
                                 </DrawingBrush>
                             </Border.Background>
-                        </Border>
+                        </Border>-->
                         <Border>
                             <AdornerDecorator>
                                 <ContentPresenter />

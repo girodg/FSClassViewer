@@ -76,7 +76,7 @@ namespace FSClassViewer
         {
             if (this.WindowState == System.Windows.WindowState.Maximized)
             {
-                ContainingBorder.Padding = new Thickness(5.0);
+                ContainingBorder.Padding = new Thickness(5,10,10,5);
                 ContainingBorder.BorderThickness = new Thickness(0D);
             }
             else
